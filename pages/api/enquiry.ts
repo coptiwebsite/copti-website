@@ -1,7 +1,15 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST,
+  port: 465,
+  secure: true,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -15,8 +23,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    await resend.emails.send({
-      from: 'COPTI Enquiry Form <info@copti.org.gh>',
+    await transporter.sendMail({
+      from: `"COPTI Enquiry Form" <info@copti.org.gh>`,
       to: 'info@copti.org.gh',
       replyTo: email,
       subject: `School Enquiry — ${school}`,
@@ -34,7 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json({ success: true });
   } catch (error) {
-    console.error('Resend error:', error);
+    console.error('Mail error:', error);
     return res.status(500).json({ error: 'Failed to send email.' });
   }
 }
