@@ -1,5 +1,7 @@
-// pages/api/enquiry.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -12,10 +14,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Name, email, and message are required.' });
   }
 
-  console.log(`School enquiry for [${school}]:`, { name, email, phone, message });
+  try {
+    await resend.emails.send({
+      from: 'COPTI Enquiry Form <info@copti.org.gh>',
+      to: 'info@copti.org.gh',
+      replyTo: email,
+      subject: `School Enquiry — ${school}`,
+      html: `
+        <h2>New School Enquiry</h2>
+        <p><strong>School:</strong> ${school}</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+        <hr />
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `,
+    });
 
-  // Configure Nodemailer here same as contact.ts when ready for production
-  // Subject should include school name: `Enquiry about ${school}`
-
-  return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Resend error:', error);
+    return res.status(500).json({ error: 'Failed to send email.' });
+  }
 }

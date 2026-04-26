@@ -1,5 +1,7 @@
-// pages/api/contact.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -12,24 +14,27 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(400).json({ error: 'Name, email, and message are required.' });
   }
 
-  // ── Option 1: Log to console (development) ──────────
-  console.log('Contact form submission:', { name, email, phone, subject, message });
+  try {
+    await resend.emails.send({
+      from: 'COPTI Contact Form <info@copti.org.gh>',
+      to: 'info@copti.org.gh',
+      replyTo: email,
+      subject: `COPTI Contact — ${subject}`,
+      html: `
+        <h2>New Contact Form Submission</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || 'Not provided'}</p>
+        <p><strong>Subject:</strong> ${subject}</p>
+        <hr />
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `,
+    });
 
-  // ── Option 2: Send via Nodemailer (production) ───────
-  // Uncomment and configure when ready:
-  //
-  // import nodemailer from 'nodemailer';
-  // const transporter = nodemailer.createTransporter({
-  //   host: process.env.SMTP_HOST,
-  //   port: Number(process.env.SMTP_PORT) || 587,
-  //   auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-  // });
-  // await transporter.sendMail({
-  //   from: `"${name}" <${process.env.SMTP_USER}>`,
-  //   to: 'info@copti.org.gh',
-  //   subject: `COPTI Contact Form — ${subject}`,
-  //   text: `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`,
-  // });
-
-  return res.status(200).json({ success: true });
+    return res.status(200).json({ success: true });
+  } catch (error) {
+    console.error('Resend error:', error);
+    return res.status(500).json({ error: 'Failed to send email.' });
+  }
 }
