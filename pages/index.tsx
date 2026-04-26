@@ -193,7 +193,6 @@ function HeroSlider() {
             </span>
           </div>
           <h1 style={{ color: 'white', fontSize: 'clamp(2.2rem,5vw,3.4rem)', lineHeight: 1.12, marginBottom: 20 }}>{slide.headline}</h1>
-          <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '1.1rem', lineHeight: 1.75, marginBottom: 36, maxWidth: 600 }}>{slide.sub}</p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap' }}>
             <Link href="/about" className="btn btn-primary btn-lg">Learn About Us</Link>
             <Link href="/schools" className="btn btn-secondary btn-lg">View Member Schools</Link>
