@@ -128,32 +128,27 @@ const HERO_SLIDES = [
   {
     img: '/hero/hero (1).JPG',
     headline: <>Driving Ghana&apos;s Industrial<br /><em>Transformation Through TVET</em></>,
-    sub: 'The Conference of Principals of Technical Institutions unites principals, industry leaders, and TVET stakeholders to shape vocational excellence across all 16 regions of Ghana.',
   },
   {
     img: '/hero/hero (2).JPG',
     headline: <>Building Ghana&apos;s Technical<br /><em>Workforce of Tomorrow</em></>,
-    sub: 'Advocating for policy reform, setting standards, and facilitating skills transfer to keep every technical institution competitive and nationally relevant.',
+    
   },
   {
     img: '/hero/hero (3).JPG',
     headline: <>Together for Skills<br /><em>Together for Ghana</em></>,
-    sub: "Over 60 member schools, 16 regions, and a shared mandate — to produce graduates who drive Africa's industrial future.",
   },
   {
     img: '/hero/hero (4).JPG',
     headline: <>Excellence in TVET<br /><em>Across Ghana</em></>,
-    sub: 'Empowering technical institutions to deliver world-class vocational education and training for national development.',
-  },
+      },
   {
     img: '/hero/hero (5).JPG',
     headline: <>Innovation &amp; Skills<br /><em>For the Future</em></>,
-    sub: 'Fostering innovation and practical skills to meet the demands of a changing workforce.',
   },
   {
     img: '/hero/hero (6).JPG',
     headline: <>Leadership in TVET<br /><em>Transforming Lives</em></>,
-    sub: 'Leading the way in technical and vocational education for sustainable growth and opportunity.',
   },
 ];
 

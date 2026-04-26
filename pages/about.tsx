@@ -156,7 +156,7 @@ const management = [
     initials: 'AD',
   },
   {
-    name:   'Vice President',
+    name:   'Theophilous Asamoah Duku',
     role:   'Vice President',
     region: '',
     bio:    "Supports the President in executing COPTI's strategic mandate and deputises in all official functions across member institutions.",
@@ -192,15 +192,16 @@ const partners = [
 // ── LeaderCard ─────────────────────────────────────────────────────────────
 function LeaderCard({ name, role, region, bio, photo, initials }: typeof management[0]) {
   return (
-    <div style={{
-      background: 'white',
-      borderRadius: 20,
-      overflow: 'hidden',
-      boxShadow: '0 4px 28px rgba(10,28,64,0.09)',
-      display: 'flex',
-      flexDirection: 'column',
-      transition: 'transform 0.22s, box-shadow 0.22s',
-    }}
+    <div
+      style={{
+        background: 'white',
+        borderRadius: 20,
+        overflow: 'hidden',
+        boxShadow: '0 4px 28px rgba(10,28,64,0.09)',
+        display: 'flex',
+        flexDirection: 'column',
+        transition: 'transform 0.22s, box-shadow 0.22s',
+      }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-4px)';
         (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 40px rgba(10,28,64,0.14)';
@@ -210,18 +211,37 @@ function LeaderCard({ name, role, region, bio, photo, initials }: typeof managem
         (e.currentTarget as HTMLDivElement).style.boxShadow = '0 4px 28px rgba(10,28,64,0.09)';
       }}
     >
-      {/* Photo area */}
-      <div style={{ position: 'relative', height: 220, background: 'var(--navy)', overflow: 'hidden' }}>
-        {/* Decorative stripe */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 4, background: 'var(--gold)', zIndex: 2 }} />
+      {/* Photo area - improved for mobile/tablet */}
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          aspectRatio: '1/1', // Perfect circle
+          background: 'var(--navy)',
+          overflow: 'hidden',
+          maxWidth: 220,
+          maxHeight: 220,
+          minWidth: 120,
+          minHeight: 120,
+          margin: '0 auto',
+          borderRadius: '50%',
+        }}
+      >
         <Image
           src={photo}
           alt={name}
           fill
-          sizes="(max-width:768px) 100vw, 260px"
-          style={{ objectFit: 'cover', objectPosition: 'top', opacity: 0.92 }}
-          onError={(e) => {
-            // Fallback: hide img, show initials overlay
+          sizes="(max-width:768px) 100vw, 220px"
+          style={{
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            opacity: 0.96,
+            width: '100%',
+            height: '100%',
+            borderRadius: '50%',
+            transition: 'object-position 0.3s',
+          }}
+          onError={e => {
             const el = e.currentTarget as HTMLImageElement;
             el.style.display = 'none';
             const fallback = el.parentElement?.querySelector('[data-fallback]') as HTMLElement;
@@ -229,14 +249,30 @@ function LeaderCard({ name, role, region, bio, photo, initials }: typeof managem
           }}
         />
         {/* Initials fallback — hidden until image errors */}
-        <div data-fallback="1" style={{
-          display: 'none',
-          position: 'absolute', inset: 0,
-          alignItems: 'center', justifyContent: 'center',
-          background: 'var(--navy)',
-          zIndex: 1,
-        }}>
-          <span style={{ fontSize: 52, fontWeight: 800, color: 'var(--gold)', letterSpacing: -2, fontFamily: 'Georgia, serif' }}>{initials}</span>
+        <div
+          data-fallback="1"
+          style={{
+            display: 'none',
+            position: 'absolute',
+            inset: 0,
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'var(--navy)',
+            zIndex: 1,
+            borderRadius: '50%',
+          }}
+        >
+          <span
+            style={{
+              fontSize: 52,
+              fontWeight: 800,
+              color: 'var(--gold)',
+              letterSpacing: -2,
+              fontFamily: 'Georgia, serif',
+            }}
+          >
+            {initials}
+          </span>
         </div>
       </div>
 
@@ -247,8 +283,8 @@ function LeaderCard({ name, role, region, bio, photo, initials }: typeof managem
         {region && (
           <p style={{ margin: '0 0 10px', fontSize: 12, color: 'var(--grey)', display: 'flex', alignItems: 'center', gap: 5 }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round"/>
-              <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="2"/>
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
+              <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="2" />
             </svg>
             {region}
           </p>

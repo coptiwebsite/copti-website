@@ -25,7 +25,7 @@ export default function Contact({ settings }: ContactProps) {
 
   const phone1    = settings?.phone1    ?? '+233 24 362 3269';
   const phone2    = settings?.phone2    ?? '+233 50 740 3888';
-  const whatsapp  = settings?.whatsapp  ?? '0530505031';
+  const whatsapp  = settings?.whatsapp  ?? '+233 53 050 5031';
   const email     = settings?.email     ?? 'info@copti.org.gh';
   const address   = settings?.address   ?? 'COPTI Secretariat, Ghana';
 

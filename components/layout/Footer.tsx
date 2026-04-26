@@ -146,7 +146,7 @@ export default function Footer() {
                 <ContactRow icon="fa fa-envelope" color="var(--gold)" href="mailto:info@copti.org.gh" label="info@copti.org.gh" />
 
                 {/* P.O. Box */}
-                <ContactRow icon="fa fa-box" color="var(--gold)" label="P.O. Box CT 2878, Cantonments, Accra" />
+                <ContactRow icon="fa fa-box" color="var(--gold)" label="P.O. Box CT XXX, Cantonments, Accra" />
 
                 {/* Location */}
                 <ContactRow icon="fa fa-location-dot" color="var(--gold)"
