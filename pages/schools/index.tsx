@@ -205,5 +205,5 @@ export default function SchoolsDirectory({ schools }: SchoolsPageProps) {
 
 export const getStaticProps: GetStaticProps<SchoolsPageProps> = async () => {
   const schools = await client.fetch<SchoolCardType[]>(SCHOOLS_QUERY).catch(() => []);
-  return { props: { schools: schools ?? [] }, revalidate: 600 };
+  return { props: { schools: schools ?? [] }, revalidate: 10 };
 };

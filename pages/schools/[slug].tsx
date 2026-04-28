@@ -547,5 +547,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps<SchoolProfileProps> = async ({ params }) => {
   const school = await client.fetch<School>(SCHOOL_BY_SLUG_QUERY, { slug: params?.slug as string }).catch(() => null);
   if (!school) return { notFound: true };
-  return { props: { school }, revalidate: 1800 };
+  return { props: { school }, revalidate: 10 };
 };
