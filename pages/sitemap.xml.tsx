@@ -2,24 +2,26 @@ import type { GetServerSideProps } from 'next';
 import { client } from '../lib/sanity';
 import { SITE_URL } from '../lib/seo';
 
-// Static pages with their priorities and change frequencies
+// Fixed launch date — stops Google showing "X hours ago"
+const LAUNCH_DATE = '2026-04-24';
+
 const STATIC_PAGES = [
-  { path: '',          priority: '1.0',  changefreq: 'weekly'  },
-  { path: '/about',    priority: '0.9',  changefreq: 'monthly' },
-  { path: '/schools',  priority: '0.95', changefreq: 'weekly'  },
-  { path: '/news',     priority: '0.85', changefreq: 'daily'   },
-  { path: '/gallery',  priority: '0.75', changefreq: 'weekly'  },
-  { path: '/events',   priority: '0.80', changefreq: 'weekly'  },
-  { path: '/contact',  priority: '0.70', changefreq: 'monthly' },
+  { path: '',         priority: '1.0',  changefreq: 'weekly',  lastmod: LAUNCH_DATE },
+  { path: '/about',   priority: '0.9',  changefreq: 'monthly', lastmod: LAUNCH_DATE },
+  { path: '/schools', priority: '0.95', changefreq: 'weekly',  lastmod: LAUNCH_DATE },
+  { path: '/news',    priority: '0.85', changefreq: 'daily',   lastmod: LAUNCH_DATE },
+  { path: '/gallery', priority: '0.75', changefreq: 'weekly',  lastmod: LAUNCH_DATE },
+  { path: '/events',  priority: '0.80', changefreq: 'weekly',  lastmod: LAUNCH_DATE },
+  { path: '/contact', priority: '0.70', changefreq: 'monthly', lastmod: LAUNCH_DATE },
 ];
 
 function escapeXml(str: string): string {
   return str
-    .replace(/&/g,  '&amp;')
-    .replace(/</g,  '&lt;')
-    .replace(/>/g,  '&gt;')
-    .replace(/"/g,  '&quot;')
-    .replace(/'/g,  '&apos;');
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
 }
 
 function url(loc: string, lastmod: string, changefreq: string, priority: string): string {
@@ -33,20 +35,18 @@ function url(loc: string, lastmod: string, changefreq: string, priority: string)
 }
 
 function generateSitemap(
-  schools: { slug: string; updatedAt?: string }[],
+  schools: { slug: string; _updatedAt?: string }[],
   posts:   { slug: string; publishedAt?: string }[],
   gallery: { slug: string; date?: string }[],
 ): string {
-  const today = new Date().toISOString().split('T')[0];
-
   const staticUrls = STATIC_PAGES.map(p =>
-    url(`${SITE_URL}${p.path}`, today, p.changefreq, p.priority)
+    url(`${SITE_URL}${p.path}`, p.lastmod, p.changefreq, p.priority)
   ).join('');
 
   const schoolUrls = schools.map(s =>
     url(
       `${SITE_URL}/schools/${s.slug}`,
-      s.updatedAt ? s.updatedAt.split('T')[0] : today,
+      s._updatedAt ? s._updatedAt.split('T')[0] : LAUNCH_DATE,
       'monthly',
       '0.85',
     )
@@ -55,7 +55,7 @@ function generateSitemap(
   const postUrls = posts.map(p =>
     url(
       `${SITE_URL}/news/${p.slug}`,
-      p.publishedAt ? p.publishedAt.split('T')[0] : today,
+      p.publishedAt ? p.publishedAt.split('T')[0] : LAUNCH_DATE,
       'monthly',
       '0.75',
     )
@@ -64,7 +64,7 @@ function generateSitemap(
   const galleryUrls = gallery.map(g =>
     url(
       `${SITE_URL}/gallery/${g.slug}`,
-      g.date ?? today,
+      g.date ?? LAUNCH_DATE,
       'monthly',
       '0.65',
     )
@@ -84,8 +84,8 @@ export default function Sitemap() { return null; }
 
 export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const [schools, posts, gallery] = await Promise.all([
-    client.fetch<{ slug: string; updatedAt?: string }[]>(
-      `*[_type == "school"] { "slug": slug.current, "_updatedAt": _updatedAt }`
+    client.fetch<{ slug: string; _updatedAt?: string }[]>(
+      `*[_type == "school"] { "slug": slug.current, _updatedAt }`
     ).catch(() => []),
     client.fetch<{ slug: string; publishedAt?: string }[]>(
       `*[_type == "post"] { "slug": slug.current, publishedAt }`
@@ -98,7 +98,7 @@ export const getServerSideProps: GetServerSideProps = async ({ res }) => {
   const sitemap = generateSitemap(schools, posts, gallery);
 
   res.setHeader('Content-Type', 'application/xml');
-  res.setHeader('Cache-Control', 'public, s-maxage=3600, stale-while-revalidate=86400');
+  res.setHeader('Cache-Control', 'public, s-maxage=86400, stale-while-revalidate=604800');
   res.write(sitemap);
   res.end();
 
