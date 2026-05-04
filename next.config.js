@@ -28,6 +28,14 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: '/webmail',
+        destination: 'https://usnyc.aveshost.net/webmail',
+        permanent: true,
+      },
+    ];
+  },
 };
-
 module.exports = nextConfig;
