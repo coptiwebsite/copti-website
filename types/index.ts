@@ -161,6 +161,7 @@ export interface SchoolsPageProps {
 
 export interface SchoolProfileProps {
   school: School;
+  relatedSchools: SchoolCard[];
 }
 
 export interface NewsPageProps {

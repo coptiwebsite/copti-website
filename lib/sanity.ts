@@ -40,6 +40,12 @@ export const SCHOOL_BY_SLUG_QUERY = `
 
 export const SCHOOL_SLUGS_QUERY = `*[_type == "school"] { "slug": slug.current }`;
 
+export const RELATED_SCHOOLS_QUERY = `
+  *[_type == "school" && region == $region && slug.current != $slug] | order(name asc) [0..4] {
+    _id, name, slug, schoolType, region, district, logo, shortDescription
+  }
+`;
+
 export const FEATURED_SCHOOLS_QUERY = `
   *[_type == "school" && isFeatured == true] | order(name asc) [0..2] {
     _id, name, slug, schoolType, region, district, logo,
