@@ -487,21 +487,21 @@ export default function SchoolProfile({ school, relatedSchools }: SchoolProfileP
                       const relSlug = typeof s.slug === 'string' ? s.slug : (s.slug as { current: string })?.current;
                       return (
                         <Link key={s._id} href={`/schools/${relSlug}`}
-                          style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none', padding: '8px 0', borderBottom: i < relatedSchools.length - 1 ? '1px solid #f0f4fa' : 'none' }}>
+                          style={{ display: 'flex', alignItems: 'flex-start', gap: 10, textDecoration: 'none', padding: '8px 0', borderBottom: i < relatedSchools.length - 1 ? '1px solid #f0f4fa' : 'none' }}>
                           {s.logo ? (
-                            <div style={{ width: 36, height: 36, borderRadius: 8, overflow: 'hidden', background: '#f0f4fa', flexShrink: 0, border: '1px solid #e8edf5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <div style={{ width: 36, height: 36, borderRadius: 8, overflow: 'hidden', background: '#f0f4fa', flexShrink: 0, border: '1px solid #e8edf5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: 2 }}>
                               <Image src={urlFor(s.logo).width(72).height(72).url()} alt={s.name} width={36} height={36} style={{ objectFit: 'contain', width: '100%', height: '100%' }} />
                             </div>
                           ) : (
-                            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'var(--navy)', color: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 800, flexShrink: 0 }}>
+                            <div style={{ width: 36, height: 36, borderRadius: 8, background: 'var(--navy)', color: 'var(--gold)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 14, fontWeight: 800, flexShrink: 0, marginTop: 2 }}>
                               {s.name?.charAt(0)}
                             </div>
                           )}
                           <div style={{ flex: 1, minWidth: 0 }}>
-                            <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--navy)', margin: 0, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.name}</p>
+                            <p style={{ fontSize: 13, fontWeight: 700, color: 'var(--navy)', margin: 0, lineHeight: 1.3, wordBreak: 'break-word' }}>{s.name}</p>
                             {s.district && <p style={{ fontSize: 11, color: 'var(--grey)', margin: 0 }}>{s.district}</p>}
                           </div>
-                          <i className="fa fa-chevron-right" style={{ fontSize: 10, color: 'var(--grey)', flexShrink: 0 }} />
+                          <i className="fa fa-chevron-right" style={{ fontSize: 10, color: 'var(--grey)', flexShrink: 0, marginTop: 4 }} />
                         </Link>
                       );
                     })}
