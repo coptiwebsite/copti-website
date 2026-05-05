@@ -49,7 +49,7 @@ export default function SchoolCard({ school }: Props) {
     }}>
 
       {/* NAVY HEADER */}
-      <div style={{ background: 'var(--navy)', padding: '18px 20px', display: 'flex', gap: 14, alignItems: 'center' }}>
+      <div style={{ background: 'var(--navy)', padding: '18px 20px', display: 'flex', gap: 14, alignItems: 'flex-start' }}>
         {logo ? (
           <div style={{ width: 48, height: 48, borderRadius: 8, overflow: 'hidden', flexShrink: 0, background: 'white', border: '1px solid rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Image src={urlFor(logo).width(96).height(96).url()} alt={`${name} logo`} width={48} height={48} style={{ objectFit: 'contain', padding: 3 }} />
@@ -60,7 +60,7 @@ export default function SchoolCard({ school }: Props) {
           </div>
         )}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <h3 style={{ fontSize: '0.93rem', fontWeight: 700, color: 'white', marginBottom: 6, lineHeight: 1.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: 'var(--font-head)' }}>
+          <h3 style={{ fontSize: '0.93rem', fontWeight: 700, color: 'white', marginBottom: 6, lineHeight: 1.3, wordBreak: 'break-word', fontFamily: 'var(--font-head)' }}>
             <Link href={`/schools/${slugStr}`} style={{ color: 'inherit', textDecoration: 'none' }}
               onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--gold)'}
               onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'white'}>
