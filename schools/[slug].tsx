@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PortableText } from '@portabletext/react';
 import Layout from '@/components/layout/Layout';
-import { client, SCHOOL_BY_SLUG_QUERY, ... } from '@/lib/sanity';
+import { client, SCHOOL_BY_SLUG_QUERY, SCHOOL_SLUGS_QUERY, RELATED_SCHOOLS_QUERY, urlFor } from '@/lib/sanity';
 import { getSchoolProfileSeo, ... } from '@/lib/seo';
 import type { SchoolProfileProps, School, SchoolCard } from '@/types';
 
