@@ -1,10 +1,9 @@
 import { useState, useMemo, useRef } from 'react';
 import type { GetStaticProps } from 'next';
-import Layout from '../../components/layout/Layout';
-import SchoolCard from '../../components/schools/SchoolCard';
-import { client, SCHOOLS_QUERY } from '../../lib/sanity';
-
-import type { SchoolsPageProps, SchoolCard as SchoolCardType } from '../../types';
+import Layout from '@/components/layout/Layout';
+import SchoolCard from '@/components/schools/SchoolCard';
+import { client, SCHOOLS_QUERY } from '@/lib/sanity';
+import type { SchoolsPageProps, SchoolCard as SchoolCardType } from '@/types';
 
 const REGIONS: string[] = [
   'Greater Accra Region', 'Ashanti Region', 'Western Region', 'Eastern Region',

@@ -18,8 +18,17 @@ export default function Contact({ settings }: ContactProps) {
     e.preventDefault();
     setStatus('sending');
     try {
-      await fetch('/api/contact', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(form) });
-      setStatus('sent');
+      const formData = new FormData();
+      formData.append('access_key', '1eb06b45-973d-401e-89bd-aa46f5ba4d8d');
+      formData.append('name', form.name);
+      formData.append('email', form.email);
+      formData.append('phone', form.phone);
+      formData.append('subject', form.subject);
+      formData.append('message', form.message);
+
+      const response = await fetch('https://api.web3forms.com/submit', { method: 'POST', body: formData });
+      const data = await response.json();
+      setStatus(data.success ? 'sent' : 'error');
     } catch { setStatus('error'); }
   };
 
