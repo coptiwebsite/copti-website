@@ -62,7 +62,7 @@ export default function Contact({ settings }: ContactProps) {
               <h2 style={{ marginBottom:24 }}>Send Us a Message</h2>
               {status === 'sent' ? (
                 <div className="formSuccess">
-                  <i className="fa fa-check-circle" /> Your message has been sent. We'll respond within 2–3 working days.
+                  <i className="fa fa-check-circle" /> Your message has been sent. We'll respond within 24 hours.
                 </div>
               ) : (
                 <form onSubmit={submit}>
@@ -75,8 +75,8 @@ export default function Contact({ settings }: ContactProps) {
                     <input id="c-email" type="email" name="email" value={form.email} onChange={handle} required />
                   </div>
                   <div className="formGroup">
-                    <label htmlFor="c-phone">Phone Number</label>
-                    <input id="c-phone" type="tel" name="phone" value={form.phone} onChange={handle} />
+                    <label htmlFor="c-phone">Phone Number *</label>
+                    <input id="c-phone" type="tel" name="phone" value={form.phone} onChange={handle} required />
                   </div>
                   <div className="formGroup">
                     <label htmlFor="c-subject">Subject</label>

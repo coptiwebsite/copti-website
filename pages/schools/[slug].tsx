@@ -550,7 +550,7 @@ function EnquiryForm({ schoolName }: { schoolName: string }) {
   if (status === 'sent') return (
     <div style={{ background: '#d4edda', color: '#155724', padding: '14px 18px', borderRadius: 8, border: '1px solid #c3e6cb', fontSize: 14 }}>
       <i className="fa fa-check-circle" style={{ marginRight: 8 }} />
-      Message sent. COPTI will respond within 2–3 working days.
+      Message sent. COPTI will respond within 24 hours.
     </div>
   );
 
@@ -559,7 +559,7 @@ function EnquiryForm({ schoolName }: { schoolName: string }) {
       {[
         { id: 'eq-name',  name: 'name',  label: 'Full Name *',     type: 'text',  required: true  },
         { id: 'eq-email', name: 'email', label: 'Email Address *', type: 'email', required: true  },
-        { id: 'eq-phone', name: 'phone', label: 'Phone Number',    type: 'tel',   required: false },
+        { id: 'eq-phone', name: 'phone', label: 'Phone Number *',  type: 'tel',   required: true  },
       ].map(({ id, name, label, type, required }) => (
         <div key={id} className="formGroup">
           <label htmlFor={id}>{label}</label>
