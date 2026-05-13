@@ -534,6 +534,7 @@ function EnquiryForm({ schoolName }: { schoolName: string }) {
     try {
       const formData = new FormData();
       formData.append('access_key', '1eb06b45-973d-401e-89bd-aa46f5ba4d8d');
+      formData.append('botcheck', '');
       formData.append('name', form.name);
       formData.append('email', form.email);
       formData.append('phone', form.phone);
