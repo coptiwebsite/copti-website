@@ -7,13 +7,13 @@ import Layout from '../../components/layout/Layout';
 import { client, POSTS_QUERY, urlFor } from '../../lib/sanity';
 import type { NewsPageProps, PostCard } from '../../types';
 
-const formatExcerpt = (text?: string, maxWords = 20) => {
+const formatExcerpt = (text?: string, maxWords = 40) => {
   if (!text) return '';
   const words = text.trim().split(/\s+/);
   return words.slice(0, maxWords).join(' ');
 };
 
-const hasMoreWords = (text?: string, maxWords = 20) => {
+const hasMoreWords = (text?: string, maxWords = 40) => {
   if (!text) return false;
   return text.trim().split(/\s+/).length > maxWords;
 };
