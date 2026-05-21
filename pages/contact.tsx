@@ -33,9 +33,8 @@ export default function Contact({ settings }: ContactProps) {
     } catch { setStatus('error'); }
   };
 
-  const phone1    = settings?.phone1    ?? '+233 24 362 3269';
-  const phone2    = settings?.phone2    ?? '+233 50 740 3888';
-  const whatsapp  = settings?.whatsapp  ?? '+233 53 050 5031';
+  const phone1    = settings?.phone1    ?? '+233 24 440 2556';
+  const whatsapp  = settings?.whatsapp  ?? '+233 24 440 2556';
   const email     = settings?.email     ?? 'info@copti.org.gh';
   const address   = settings?.address   ?? 'COPTI Secretariat, Ghana';
 
@@ -104,7 +103,6 @@ export default function Contact({ settings }: ContactProps) {
               {[
                 { icon:'fa fa-map-marker-alt', label:'Office Address',  value: address,       href: undefined },
                 { icon:'fa fa-phone',          label:'Phone',           value: phone1,        href:`tel:${phone1}` },
-                { icon:'fa fa-phone',          label:'Phone 2',         value: phone2,        href:`tel:${phone2}` },
                 { icon:'fab fa-whatsapp',      label:'WhatsApp',        value: whatsapp,      href:`tel:${whatsapp}` },
                 { icon:'fa fa-envelope',       label:'Email',           value: email,         href:`mailto:${email}` },
               ].map(({ icon, label, value, href }) => (

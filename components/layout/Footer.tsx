@@ -4,7 +4,7 @@ const AFFILIATES = [
   { label: 'Ghana Education Service',  href: 'https://ges.gov.gh',          abbr: 'GES'   },
   { label: 'National Teaching Council', href: 'https://ntc.gov.gh',         abbr: 'NTC'   },
   { label: 'Ministry of Education',    href: 'https://moe.gov.gh',          abbr: 'MoE'   },
-  { label: 'COTVET',                   href: 'https://cotvet.gov.gh',       abbr: 'COTVET' },
+  { label: 'CTVET',                   href: 'https://ctvet.gov.gh/',       abbr: 'CTVET' },
   { label: 'Ghana TVET Service',       href: 'https://gtvetservice.gov.gh', abbr: 'GTVET'  },
 ];
 
@@ -136,11 +136,10 @@ export default function Footer() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14, marginBottom: 28 }}>
 
                 {/* Phone */}
-                <ContactRow icon="fa fa-phone" color="var(--gold)" href="tel:+233243623269" label="+233 24 362 3269" />
-                <ContactRow icon="fa fa-phone" color="var(--gold)" href="tel:+233507403888" label="+233 50 740 3888" />
-
+                <ContactRow icon="fa fa-phone" color="var(--gold)" href="tel:+233244402556" label="+233 24 440 2556" />
+                
                 {/* WhatsApp */}
-                <ContactRow icon="fab fa-whatsapp" color="#25d366" href="https://wa.me/233530505031" label="+233 530 505 031" external />
+                <ContactRow icon="fab fa-whatsapp" color="#25d366" href="https://wa.me/233244402556" label="+233 24 440 2556" external />
 
                 {/* Email */}
                 <ContactRow icon="fa fa-envelope" color="var(--gold)" href="mailto:info@copti.org.gh" label="info@copti.org.gh" />

@@ -35,12 +35,12 @@ export default function Header() {
       <div className="topBar">
         <div className="container">
           <div className="topBarLeft">
-            <a href="tel:+233243623269">
-              <i className="fa fa-phone" /> +233 24 362 3269
+            <a href="tel:+233244402556">
+              <i className="fa fa-phone" /> +233 24 440 2556
             </a>
             <span style={{ color: 'rgba(255,255,255,0.3)' }}>|</span>
-            <a href="tel:+233507403888">
-              <i className="fa fa-phone" /> +233 50 740 3888
+            <a href="tel:+233244402556">
+              <i className="fa fa-phone" /> +233 24 440 2556
             </a>
             <span style={{ color: 'rgba(255,255,255,0.3)' }}>|</span>
             <a href="mailto:info@copti.org.gh">
@@ -54,7 +54,7 @@ export default function Header() {
             <a href="https://x.com/coptiGhana" target="_blank" rel="noopener noreferrer" aria-label="X">
               <i className="fab fa-x-twitter" />
             </a>
-            <a href="https://wa.me/233530505031" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <a href="https://wa.me/233244402556" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
               <i className="fab fa-whatsapp" />
             </a>
             <a href="https://www.linkedin.com/company/copti-ghana" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
@@ -121,7 +121,7 @@ export default function Header() {
           ))}
           <Link href="/contact">Contact Us</Link>
           <div className="mobileNavSocial">
-            <a href="https://wa.me/233530505031" target="_blank" rel="noopener noreferrer" style={{ color: '#25d366' }}>
+            <a href="https://wa.me/233244402556" target="_blank" rel="noopener noreferrer" style={{ color: '#25d366' }}>
               <i className="fab fa-whatsapp" />
             </a>
             <a href="https://www.facebook.com/coptiGhana" target="_blank" rel="noopener noreferrer" style={{ color: '#4267B2' }}>

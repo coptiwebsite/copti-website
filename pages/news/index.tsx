@@ -7,6 +7,17 @@ import Layout from '../../components/layout/Layout';
 import { client, POSTS_QUERY, urlFor } from '../../lib/sanity';
 import type { NewsPageProps, PostCard } from '../../types';
 
+const formatExcerpt = (text?: string, maxWords = 20) => {
+  if (!text) return '';
+  const words = text.trim().split(/\s+/);
+  return words.slice(0, maxWords).join(' ');
+};
+
+const hasMoreWords = (text?: string, maxWords = 20) => {
+  if (!text) return false;
+  return text.trim().split(/\s+/).length > maxWords;
+};
+
 export default function NewsPage({ posts }: NewsPageProps) {  // ← added
   return (
     <Layout>
@@ -48,7 +59,7 @@ export default function NewsPage({ posts }: NewsPageProps) {  // ← added
                       <span>{new Date(post.publishedAt).toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</span>
                     </div>
                     <h3><Link href={`/news/${post.slug.current}`}>{post.title}</Link></h3>
-                    <p>{post.excerpt?.split(' ').slice(0,20).join(' ')}{(post.excerpt?.split(' ').length ?? 0) > 20 ? '…' : ''}</p>
+                    <p>{formatExcerpt(post.excerpt, 28)}{hasMoreWords(post.excerpt, 28) ? '…' : ''}</p>
                   </div>
                   <div className="newsCardFooter">
                     <Link href={`/news/${post.slug.current}`} className="btn btn-outline btn-sm">Read More →</Link>

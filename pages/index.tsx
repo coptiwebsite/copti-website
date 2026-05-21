@@ -18,6 +18,17 @@ import {
 import {
   getHomeSeo, orgSchema, websiteSchema,
 } from '../lib/seo';
+
+const formatExcerpt = (text?: string, maxWords = 24) => {
+  if (!text) return '';
+  const words = text.trim().split(/\s+/);
+  return words.slice(0, maxWords).join(' ');
+};
+
+const hasMoreWords = (text?: string, maxWords = 24) => {
+  if (!text) return false;
+  return text.trim().split(/\s+/).length > maxWords;
+};
 import type { HomePageProps, SchoolCard as SchoolCardType, PostCard, SiteSettings, Event } from '../types';
 
 // Gold icons for stats (from about page)
@@ -445,7 +456,7 @@ export default function Home({ featuredSchools, latestPosts, settings, featuredE
                         <span>{new Date(post.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</span>
                       </div>
                       <h3><Link href={`/news/${post.slug.current}`}>{post.title}</Link></h3>
-                      <p>{post.excerpt?.split(' ').slice(0, 18).join(' ')}{(post.excerpt?.split(' ').length ?? 0) > 18 ? '…' : ''}</p>
+                      <p>{formatExcerpt(post.excerpt, 24)}{hasMoreWords(post.excerpt, 24) ? '…' : ''}</p>
                     </div>
                     <div className="newsCardFooter">
                       <Link href={`/news/${post.slug.current}`} className="btn btn-outline btn-sm">Read More →</Link>

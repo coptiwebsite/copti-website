@@ -522,7 +522,7 @@ p  { margin-bottom: 1rem; font-size: 1.05rem; }
 ═══════════════════════════════════════════ */
 .newsGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
 .newsCard { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: all var(--transition); display: flex; flex-direction: column; }
-.newsCard:hover { box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+.newsCard:hover { box-shadow: var(--shadow-hover); }
 .newsCardImage { aspect-ratio: 16/9; overflow: hidden; background: var(--light-bg); }
 .newsCardImage img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
 .newsCard:hover .newsCardImage img { transform: scale(1.05); }
@@ -531,7 +531,7 @@ p  { margin-bottom: 1rem; font-size: 1.05rem; }
 .newsCard h3 { font-size: 1.05rem; margin-bottom: 8px; }
 .newsCard h3 a { color: var(--navy); }
 .newsCard h3 a:hover { color: var(--gold); }
-.newsCard p   { font-size: 0.9rem; color: var(--grey); flex: 1; }
+.newsCard p   { font-size: 0.9rem; color: var(--grey); flex: 1; white-space: normal; overflow-wrap: break-word; word-break: break-word; }
 .newsCardFooter { padding: 14px 22px; border-top: 1px solid var(--light-grey); }
 
 /* ═══════════════════════════════════════════
