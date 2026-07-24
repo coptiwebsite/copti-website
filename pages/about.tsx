@@ -164,11 +164,11 @@ const management = [
     initials: 'VP',
   },
   {
-    name:   'Kwabena Marfo',
-    role:   'Secretary',
+    name:   'Secretary General',
+    role:   'Secretary General',
     region: '',
     bio:    'Manages the administrative operations of COPTI, coordinates meetings, and maintains official records and correspondence on behalf of the conference.',
-    photo:  '/about/secretary.jpeg',
+    photo:  '/about/secretary.jpg',
     initials: 'SG',
   },
   {
