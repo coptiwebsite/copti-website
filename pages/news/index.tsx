@@ -1,11 +1,12 @@
 // pages/news/index.tsx
+import { useState } from 'react';
 import type { GetStaticProps } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import Layout from '../../components/layout/Layout';
 // (SEO imports removed)
-import { client, POSTS_QUERY, urlFor } from '../../lib/sanity';
-import type { NewsPageProps, PostCard } from '../../types';
+import { client, POSTS_QUERY, CATEGORIES_QUERY, urlFor } from '../../lib/sanity';
+import type { NewsPageProps, PostCard, PostCategory, PostSchoolRef } from '../../types';
 
 const formatExcerpt = (text?: string, maxWords = 40) => {
   if (!text) return '';
@@ -18,7 +19,18 @@ const hasMoreWords = (text?: string, maxWords = 40) => {
   return text.trim().split(/\s+/).length > maxWords;
 };
 
-export default function NewsPage({ posts }: NewsPageProps) {  // ← added
+export default function NewsPage({ posts, categories, schools }: NewsPageProps) {
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeSchool, setActiveSchool]     = useState<string | null>(null);
+
+  const filteredPosts = posts.filter(p => {
+    const categoryMatch = !activeCategory || p.categories?.some(c => c.title === activeCategory);
+    const schoolMatch   = !activeSchool   || p.relatedSchool?._id === activeSchool;
+    return categoryMatch && schoolMatch;
+  });
+
+  const resetAll = () => { setActiveCategory(null); setActiveSchool(null); };
+
   return (
     <Layout>
       <div className="pageHero" style={{position:'relative', background: 'var(--navy)', minHeight: 260, display:'flex', alignItems:'center'}}>
@@ -35,9 +47,47 @@ export default function NewsPage({ posts }: NewsPageProps) {  // ← added
 
       <section className="section">
         <div className="container">
-          {posts.length > 0 ? (
+          {(categories.length > 0 || schools.length > 0) && (
+            <div className="newsFilters">
+              {categories.length > 0 && (
+                <div className="newsFilterBar">
+                  <button
+                    className={`newsFilterBtn${activeCategory === null ? ' newsFilterBtn--active' : ''}`}
+                    onClick={() => setActiveCategory(null)}
+                  >
+                    All Categories
+                  </button>
+                  {categories.map((cat: PostCategory) => (
+                    <button
+                      key={cat.slug?.current ?? cat.title}
+                      className={`newsFilterBtn${activeCategory === cat.title ? ' newsFilterBtn--active' : ''}`}
+                      onClick={() => setActiveCategory(activeCategory === cat.title ? null : cat.title)}
+                    >
+                      {cat.title}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {schools.length > 0 && (
+                <div className="newsFilterSchool">
+                  <select
+                    className="newsSchoolSelect"
+                    value={activeSchool ?? ''}
+                    onChange={e => setActiveSchool(e.target.value || null)}
+                    aria-label="Filter by school"
+                  >
+                    <option value="">All Schools</option>
+                    {schools.map((s: PostSchoolRef) => (
+                      <option key={s._id} value={s._id}>{s.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
+          )}
+          {filteredPosts.length > 0 ? (
             <div className="newsGrid">
-              {posts.map(post => (
+              {filteredPosts.map(post => (
                 <article key={post._id} className="newsCard">
                   <div className="newsCardImage">
                     {post.mainImage ? (
@@ -69,9 +119,12 @@ export default function NewsPage({ posts }: NewsPageProps) {  // ← added
             </div>
           ) : (
             <div className="noResults">
-              <h3>No articles yet</h3>
-              <p>News and updates will appear here soon.</p>
-              <Link href="/" className="btn btn-primary">Go to Homepage</Link>
+              <h3>{(activeCategory || activeSchool) ? 'No matching articles' : 'No articles yet'}</h3>
+              <p>{(activeCategory || activeSchool) ? 'Try adjusting your filters.' : 'News and updates will appear here soon.'}</p>
+              {(activeCategory || activeSchool)
+                ? <button className="btn btn-primary" onClick={resetAll}>Clear Filters</button>
+                : <Link href="/" className="btn btn-primary">Go to Homepage</Link>
+              }
             </div>
           )}
         </div>
@@ -81,6 +134,17 @@ export default function NewsPage({ posts }: NewsPageProps) {  // ← added
 }  // ← this closing brace now belongs to the function
 
 export const getStaticProps: GetStaticProps<NewsPageProps> = async () => {
-  const posts = await client.fetch<PostCard[]>(POSTS_QUERY).catch(() => []);
-  return { props: { posts: posts ?? [] }, revalidate: 300 };
+  const [posts, categories] = await Promise.all([
+    client.fetch<PostCard[]>(POSTS_QUERY).catch(() => []),
+    client.fetch<PostCategory[]>(CATEGORIES_QUERY).catch(() => []),
+  ]);
+
+  // Derive unique schools from posts that have a relatedSchool tagged
+  const schoolMap = new Map<string, PostSchoolRef>();
+  for (const p of (posts ?? [])) {
+    if (p.relatedSchool) schoolMap.set(p.relatedSchool._id, p.relatedSchool);
+  }
+  const schools = Array.from(schoolMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+
+  return { props: { posts: posts ?? [], categories: categories ?? [], schools }, revalidate: 300 };
 };
