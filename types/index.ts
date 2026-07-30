@@ -100,16 +100,23 @@ export interface PostAuthor {
   bio?:   string;
 }
 
+export interface PostSchoolRef {
+  _id:  string;
+  name: string;
+  slug: { current: string };
+}
+
 /** Lightweight — used in listings */
 export interface PostCard {
-  _id:          string;
-  title:        string;
-  slug:         { current: string };
-  publishedAt:  string;
-  excerpt?:     string;
-  mainImage?:   SanityImage;
-  categories?:  PostCategory[];
-  author?:      { name: string };
+  _id:            string;
+  title:          string;
+  slug:           { current: string };
+  publishedAt:    string;
+  excerpt?:       string;
+  mainImage?:     SanityImage;
+  categories?:    PostCategory[];
+  relatedSchool?: PostSchoolRef;
+  author?:        { name: string };
 }
 
 /** Full post — used on [slug].tsx */
@@ -165,7 +172,9 @@ export interface SchoolProfileProps {
 }
 
 export interface NewsPageProps {
-  posts: PostCard[];
+  posts:      PostCard[];
+  categories: PostCategory[];
+  schools:    PostSchoolRef[];
 }
 
 export interface PostPageProps {

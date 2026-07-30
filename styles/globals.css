@@ -521,6 +521,13 @@ p  { margin-bottom: 1rem; font-size: 1.05rem; }
    NEWS CARDS
 ═══════════════════════════════════════════ */
 .newsGrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+.newsFilters { display: flex; flex-direction: column; gap: 14px; margin-bottom: 32px; }
+.newsFilterBar { display: flex; flex-wrap: wrap; gap: 10px; }
+.newsFilterBtn { padding: 8px 20px; border-radius: 999px; border: 1.5px solid var(--navy); background: transparent; color: var(--navy); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.18s ease; font-family: inherit; }
+.newsFilterBtn:hover { background: var(--navy); color: #fff; }
+.newsFilterBtn--active { background: var(--navy); color: #fff; }
+.newsFilterSchool { display: flex; align-items: center; gap: 10px; }
+.newsSchoolSelect { padding: 8px 16px; border-radius: 8px; border: 1.5px solid var(--navy); background: #fff; color: var(--navy); font-size: 13px; font-weight: 600; font-family: inherit; cursor: pointer; min-width: 220px; max-width: 340px; }
 .newsCard { background: white; border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; transition: all var(--transition); display: flex; flex-direction: column; }
 .newsCard:hover { box-shadow: var(--shadow-hover); }
 .newsCardImage { aspect-ratio: 16/9; overflow: hidden; background: var(--light-bg); }
