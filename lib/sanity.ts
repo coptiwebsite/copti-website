@@ -65,6 +65,7 @@ export const POSTS_QUERY = `
   *[_type == "post"] | order(publishedAt desc) {
     _id, title, slug, publishedAt, excerpt, mainImage,
     categories[]-> { title, slug },
+    relatedSchool-> { _id, name, slug },
     author-> { name }
   }
 `;
@@ -78,6 +79,7 @@ export const POST_BY_SLUG_QUERY = `
 `;
 
 export const POST_SLUGS_QUERY  = `*[_type == "post"] { "slug": slug.current }`;
+export const CATEGORIES_QUERY = `*[_type == "category"] | order(title asc) { _id, title, slug }`;
 export const LATEST_POSTS_QUERY = `
   *[_type == "post"] | order(publishedAt desc) [0..2] {
     _id, title, slug, publishedAt, excerpt, mainImage,
